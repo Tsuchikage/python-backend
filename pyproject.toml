@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "homework"
+version = "0.1.0"
+description = ""
+authors = ["Dmitry Zhukov <dmitriy.zhukov.ext@zyfra.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.103.1"
+
+
+[tool.poetry.group.dev.dependencies]
+pylint = "^2.17.5"
+black = "^23.9.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
