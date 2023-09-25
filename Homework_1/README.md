@@ -17,9 +17,5 @@ cd .\Homework_1\
 poetry run uvicorn app:app --port 8000
 ```
 
-## Linter and Code Formatter
-```bash
-poetry run pylint .\Homework_1\app.py
-poetry run pylint .\Homework_1\routers.py
-poetry run black .\Homework_1\app.py .\Homework_1\routers.py
-```
+## Pre-Commit Integration
+Для обеспечения качества кода, используется Pre-Commit. Он автоматизирует процесс проверки и форматирования кода перед коммитом.
