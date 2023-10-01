@@ -1,9 +1,10 @@
-from app import GreetRequest
+# routers.py
 from fastapi import APIRouter
 from fastapi import Query
 
-router = APIRouter()
+from .models import GreetRequest
 
+router = APIRouter()
 
 @router.get("/")
 async def hello_world():
