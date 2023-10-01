@@ -1,4 +1,6 @@
-from fastapi import APIRouter, Query
+from app import GreetRequest
+from fastapi import APIRouter
+from fastapi import Query
 
 router = APIRouter()
 
@@ -22,7 +24,9 @@ async def greet_name(name: str):
 
 
 @router.get("/double")
-async def double_query_param(number: int = Query(..., description="Enter a number")):
+async def double_query_param(
+        number: int =
+        Query(..., description="Enter a number")):
     """
     Выполняет увдоение числа из query параметра.
     :param number: Число
@@ -32,10 +36,10 @@ async def double_query_param(number: int = Query(..., description="Enter a numbe
 
 
 @router.post("/greet/")
-async def greet_request_body(data: dict):
+async def greet_request_body(data: GreetRequest):
     """
     Выполняет приветствие с использованием данных из JSON-тела запроса.
-    :param data: JSON-тело запроса с полем 'name'
+    :param data: Объект GreetRequest, содержащий поле 'name'
     :return: Возвращает JSON-ответ с приветствием.
     """
-    return {"message": f"Hello, {data['name']}!"}
+    return {"message": f"Hello, {data.name}!"}
