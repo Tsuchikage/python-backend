@@ -1,46 +1,49 @@
-# routers.py
 from fastapi import APIRouter
-from fastapi import Query
+from fastapi import Depends
+from fastapi import HTTPException
+from sqlalchemy.orm import Session
 
-from .models import GreetRequest
+from . import crud
+from . import database
+from . import schemas
 
 router = APIRouter()
 
-@router.get("/")
-async def hello_world():
-    """
-    :return: Возвращает "Hello, World!".
-    """
-    return {"message": "Hello, World!"}
+
+def get_db():
+    return database.SessionLocal()
 
 
-@router.get("/greet/{name}")
-async def greet_name(name: str):
-    """
-    Выполняет приветствие с именем.
-    :param name: Имя
-    :return: Возвращает "Hello, {name}!".
-    """
-    return {"message": f"Hello, {name}!"}
+@router.post("/tasks/create", response_model=schemas.Task)
+def create_task(task: schemas.TaskCreate, db: Session = Depends(get_db)):
+    return crud.create_task(db, task)
 
 
-@router.get("/double")
-async def double_query_param(
-        number: int =
-        Query(..., description="Enter a number")):
-    """
-    Выполняет увдоение числа из query параметра.
-    :param number: Число
-    :return: Возвращает удвоенное число.
-    """
-    return {"result": number * 2}
+@router.get("/tasks/{task_id}", response_model=schemas.Task)
+def get_task_by_id(task_id: int, db: Session = Depends(get_db)):
+    task = crud.get_task_by_id(db, task_id)
+    if task is None:
+        raise HTTPException(status_code=404, detail="Task not found")
+    return task
 
 
-@router.post("/greet/")
-async def greet_request_body(data: GreetRequest):
-    """
-    Выполняет приветствие с использованием данных из JSON-тела запроса.
-    :param data: Объект GreetRequest, содержащий поле 'name'
-    :return: Возвращает JSON-ответ с приветствием.
-    """
-    return {"message": f"Hello, {data.name}!"}
+@router.get("/tasks/", response_model=list[schemas.Task])
+def get_tasks(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    tasks = crud.get_tasks(db, skip, limit)
+    return tasks
+
+
+@router.put("/tasks/{task_id}", response_model=schemas.Task)
+def update_task_by_id(task_id: int, task_update: schemas.TaskUpdate, db: Session = Depends(get_db)):
+    task = crud.update_task_by_id(db, task_id, task_update)
+    if task is None:
+        raise HTTPException(status_code=404, detail="Task not found")
+    return task
+
+
+@router.delete("/tasks/{task_id}", response_model=schemas.Task)
+def delete_task_by_id(task_id: int, db: Session = Depends(get_db)):
+    task = crud.delete_task_by_id(db, task_id)
+    if task is None:
+        raise HTTPException(status_code=404, detail="Task not found")
+    return task
