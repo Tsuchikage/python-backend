@@ -64,10 +64,13 @@ python -m pytest
 
 ## Description
 Проект представляет собой приложение из двух микросервисов.
-- Inventory - создание/редактирование/просмотр товара
-- Payment - создание заказа по id и quantity (количеству) товара
+- Inventory - создание/редактирование/просмотр товара [API](http://localhost:8000/docs#/)
+- Payment - создание заказа по id и quantity (количеству) товара [API](http://localhost:8001/docs#/)
 
 ## Run
 ```bash
 docker-compose up
 ```
+[API Inventory](http://localhost:8000/docs#/) с помощью /create создать товар
+
+[API Payment](http://localhost:8001/docs#/) Используя /create_order создать заказ, указав id товара и его количество
