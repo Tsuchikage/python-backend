@@ -1,6 +1,7 @@
 from pydantic import BaseModel, Field
-from database import Base
 from sqlalchemy import Column, Integer, String, Float
+
+from server.payment.database import Base
 
 
 class Order(Base):

@@ -1,11 +1,12 @@
 from fastapi import FastAPI
-import models
-from database import engine, SessionLocal
 from typing import Annotated
 from sqlalchemy.orm import Session
 from fastapi import Depends, HTTPException, Path, Body
 from starlette import status
 import requests
+
+from server.payment import models
+from server.payment.database import engine, SessionLocal
 
 app = FastAPI()
 
