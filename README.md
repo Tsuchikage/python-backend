@@ -64,8 +64,16 @@ python -m pytest
 
 ## Description
 Проект представляет собой приложение из двух микросервисов.
-- Inventory - создание/редактирование/просмотр товара [API](http://localhost:8000/docs#/)
-- Payment - создание заказа по id и quantity (количеству) товара [API](http://localhost:8001/docs#/)
+- Inventory - создание/редактирование/просмотр товара
+```bash
+cd inventory
+uvicorn main:app --reload
+```
+- Payment - создание заказа по id и quantity (количеству) товара
+```bash
+cd payment
+uvicorn main:app --reload --port=8001
+```
 
 ## Run
 ```bash
