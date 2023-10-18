@@ -72,14 +72,12 @@ python -m pytest
 docker-compose up
 ```
 ```bash
-cd inventory
-uvicorn main:app --reload
+uvicorn server.inventory.main:app --reload
 ```
 ```bash
-cd payment
-uvicorn main:app --reload --port=8001
+uvicorn server.payment.main:app --reload --port=8001
 ```
-
-[API Inventory](http://localhost:8000/docs#/) с помощью /create создать товар
-
-[API Payment](http://localhost:8001/docs#/) Используя /create_order создать заказ, указав id товара и его количество
+```bash
+python -m pytest
+```
+Тесты создают товар и заказ, и получают об этом информацию.
