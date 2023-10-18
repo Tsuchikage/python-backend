@@ -1,12 +1,11 @@
 from fastapi import FastAPI
-import models
-from database import engine
+from database import engine, SessionLocal
 from typing import Annotated
 from sqlalchemy.orm import Session
 from fastapi import Depends, HTTPException, Path
-from database import SessionLocal
 from starlette import status
 from models import Inventory, InventoryRequest
+import models
 
 app = FastAPI()
 
@@ -14,11 +13,7 @@ models.Base.metadata.create_all(bind=engine)
 
 
 def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+    return SessionLocal()
 
 
 db_dependency = Annotated[Session, Depends(get_db)]
@@ -40,7 +35,6 @@ async def read_product(db: db_dependency, product_id: int = Path(gt=0)):
 @app.post("/create", status_code=status.HTTP_201_CREATED)
 async def create_product(db: db_dependency, inventory_request: InventoryRequest):
     inventory_model = Inventory(**inventory_request.dict())
-
     db.add(inventory_model)
     db.commit()
 
@@ -50,11 +44,9 @@ async def update_product(db: db_dependency, product_request: InventoryRequest, p
     inventory_model = db.query(Inventory).filter(Inventory.id == product_id).first()
     if inventory_model is None:
         raise HTTPException(status_code=404, detail='Product not found.')
-
     inventory_model.title = product_request.name
     inventory_model.price = product_request.price
     inventory_model.quantity = product_request.quantity
-
     db.add(inventory_model)
     db.commit()
 
@@ -65,5 +57,4 @@ async def delete_product(db: db_dependency, inventory_id: int = Path(gt=0)):
     if inventory_model is None:
         raise HTTPException(status_code=404, detail='Product not found.')
     db.query(Inventory).filter(Inventory.id == inventory_id).delete()
-
     db.commit()
