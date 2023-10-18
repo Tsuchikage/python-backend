@@ -65,20 +65,21 @@ python -m pytest
 ## Description
 Проект представляет собой приложение из двух микросервисов.
 - Inventory - создание/редактирование/просмотр товара
-```bash
-cd inventory
-uvicorn main:app --reload
-```
 - Payment - создание заказа по id и quantity (количеству) товара
-```bash
-cd payment
-uvicorn main:app --reload --port=8001
-```
 
 ## Run
 ```bash
 docker-compose up
 ```
+```bash
+cd inventory
+uvicorn main:app --reload
+```
+```bash
+cd payment
+uvicorn main:app --reload --port=8001
+```
+
 [API Inventory](http://localhost:8000/docs#/) с помощью /create создать товар
 
 [API Payment](http://localhost:8001/docs#/) Используя /create_order создать заказ, указав id товара и его количество
