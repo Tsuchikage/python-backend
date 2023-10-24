@@ -1,30 +1,35 @@
 version: '3'
 
 services:
-  server:
-    depends_on:
-      - db
-    container_name: server
-    build:
-      context: ./server
-      dockerfile: Dockerfile
-    environment:
-      DATABASE_URI: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:${POSTGRES_PORT}/${POSTGRES_DB}
-    restart: on-failure
-    command: uvicorn main:app --host 0.0.0.0 --port ${SERVER_PORT:-8000}
-    ports:
-      - '8000:${SERVER_PORT:-8000}'
-  db:
+  db_inventory:
     image: postgres:alpine3.18
+    container_name: db_inventory
     restart: always
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: tasks
+      POSTGRES_DB: inventory
     ports:
-      - '5432:${POSTGRES_PORT:-5432}'
+      - '5432:5432'
     volumes:
-      - postgres_data:/data/db
+      - postgres_inventory_data:/data/db
+
+  db_payment:
+    image: postgres:alpine3.18
+    container_name: db_payment
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: payment
+    ports:
+      - '5433:5432'
+    volumes:
+      - postgres_payment_data:/data/db
+
 volumes:
-  postgres_data:
+  postgres_inventory_data:
+    driver: local
+
+  postgres_payment_data:
     driver: local

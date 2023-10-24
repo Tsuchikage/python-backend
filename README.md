@@ -53,3 +53,31 @@ uvicorn server.src.app:app --reload
 ```bash
 python -m pytest
 ```
+
+# Homework 3
+
+## Task
+- Создать Python проект и определить несколько микросервисов
+- Для каждого микросервиса определите API, используя gRPC или HTTP, для взаимодействия между сервисами.
+- Покрыть функционал тестами
+
+
+## Description
+Проект представляет собой приложение из двух микросервисов.
+- Inventory - создание/редактирование/просмотр товара
+- Payment - создание заказа по id и quantity (количеству) товара
+
+## Run
+```bash
+docker-compose up
+```
+```bash
+uvicorn server.inventory.main:app --reload
+```
+```bash
+uvicorn server.payment.main:app --reload --port=8001
+```
+```bash
+python -m pytest
+```
+Тесты создают товар и заказ, и получают об этом информацию.
