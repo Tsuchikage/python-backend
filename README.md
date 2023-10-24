@@ -54,6 +54,7 @@ uvicorn server.src.app:app --reload
 python -m pytest
 ```
 
+
 # Homework 3
 
 ## Task
@@ -81,3 +82,22 @@ uvicorn server.payment.main:app --reload --port=8001
 python -m pytest
 ```
 Тесты создают товар и заказ, и получают об этом информацию.
+
+
+# Homework 4
+
+## Task
+- Реализовать простую логику с использованием celery и rabbitmq
+
+## Run
+```bash
+docker run -d --name some-rabbit -p 4369:4369 -p 5671:5671 -p 5672:5672 -p 15672:15672 rabbitmq:3
+```
+```bash
+uvicorn main:app --reload
+```
+[Docs](http://localhost:8000/docs)
+```bash
+celery flower -A celery_worker.celery --broker:amqp://localhost//
+```
+[Flower](http://localhost:5555/)
