@@ -91,13 +91,8 @@ python -m pytest
 
 ## Run
 ```bash
-docker run -d --name some-rabbit -p 4369:4369 -p 5671:5671 -p 5672:5672 -p 15672:15672 rabbitmq:3
+docker-compose up
 ```
-```bash
-uvicorn main:app --reload
-```
-[Docs](http://localhost:8000/docs)
-```bash
-celery flower -A celery_worker.celery --broker:amqp://localhost//
-```
-[Flower](http://localhost:5555/)
+
+## Description
+- Отправить несколько запросов. Результаты отобразятся в консоли.
