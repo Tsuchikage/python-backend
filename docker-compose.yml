@@ -1,35 +1,51 @@
-version: '3'
+version: "3"
 
 services:
-  db_inventory:
-    image: postgres:alpine3.18
-    container_name: db_inventory
-    restart: always
-    environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: inventory
+  main_app:
+    build:
+      context: .
+      dockerfile: fastapi.Dockerfile
+    command: uvicorn main:app --host 0.0.0.0 --reload
     ports:
-      - '5432:5432'
-    volumes:
-      - postgres_inventory_data:/data/db
+      - "8000:8000"
+    depends_on:
+      - rabbitmq
 
-  db_payment:
-    image: postgres:alpine3.18
-    container_name: db_payment
-    restart: always
-    environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: payment
+  rabbitmq:
+    image: rabbitmq:3.8-management-alpine
     ports:
-      - '5433:5432'
-    volumes:
-      - postgres_payment_data:/data/db
+      - 15673:15672
+    environment:
+      RABBITMQ_DEFAULT_VHOST: vhost
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
 
-volumes:
-  postgres_inventory_data:
-    driver: local
+  celery_worker:
+    build:
+      context: .
+      dockerfile: fastapi.Dockerfile
+    command: celery -A celeryconfig worker --loglevel=info
+    depends_on:
+      - rabbitmq
+      - main_app
 
-  postgres_payment_data:
-    driver: local
+  celery_worker2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: celery -A celeryconfig worker --loglevel=info
+    depends_on:
+      - rabbitmq
+      - main_app
+    stdin_open: true
+
+  celery_worker3:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: celery -A celeryconfig worker --loglevel=info
+    depends_on:
+      - rabbitmq
+      - main_app
+
+    stdin_open: true

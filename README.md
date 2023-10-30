@@ -54,6 +54,7 @@ uvicorn server.src.app:app --reload
 python -m pytest
 ```
 
+
 # Homework 3
 
 ## Task
@@ -81,3 +82,17 @@ uvicorn server.payment.main:app --reload --port=8001
 python -m pytest
 ```
 Тесты создают товар и заказ, и получают об этом информацию.
+
+
+# Homework 4
+
+## Task
+- Реализовать простую логику с использованием celery и rabbitmq
+
+## Run
+```bash
+docker-compose up
+```
+
+## Description
+- Отправить несколько запросов. Результаты отобразятся в консоли.
