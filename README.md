@@ -13,10 +13,10 @@
 # Homework 1
 
 ## Task
-- Создать "Hello world" на понравившемся фреймворке
-- Создать несколько entry point: с path параметром, query параметром и request body
-- Настроить линтеры, форматтеры
-- Написать комментарии для всех функций и entry point
+- Create a "Hello World" using a framework of your choice
+- Create several entry points: with a path parameter, a query parameter, and a request body
+- Configure linters and formatters
+- Write comments for all functions and entry points
 
 ## Run
 ```bash
@@ -29,25 +29,25 @@ uvicorn server.src.app:app --reload
 ```
 
 ## Pre-Commit Integration
-Для обеспечения качества кода, используется Pre-Commit. Он автоматизирует процесс проверки и форматирования кода перед коммитом.
+To ensure code quality, Pre-Commit is used. It automates the process of checking and formatting code before committing.
 
 
 # Homework 2
 
 ## Task
-- Придумать бизнес сценарий для вашего веб приложения и описать его в PR
-- Написать Endpoint’ы для бизнес сценариев и вынести логику работы в отдельные модули\функции
-- Бизнес логика должна быть достаточно сложной, чтобы описать её в как минимум трех функциях\методах
-- Разработать три модульных теста для каждой функции/метода
-- Разработать три интеграционных теста
-- Задокументировать, как автоматически выполнять тесты
+- Come up with a business scenario for your web application and describe it in a PR
+- Write endpoints for the business scenarios and move the logic into separate modules/functions
+- The business logic must be complex enough to be described in at least three functions/methods
+- Develop three unit tests for each function/method
+- Develop three integration tests
+- Document how to run the tests automatically
 
 ## Description
-Проект **To Do List** представляет собой приложение, с помощью которого можно составлять список задач.
-- добавление задач в список
-- удаление задач из списка
-- редактирование задачи
-- просмотр всех созданных задач
+The **To Do List** project is an application that allows you to create a task list:
+- Add tasks to the list
+- Remove tasks from the list
+- Edit tasks
+- View all created tasks
 
 ## Run Tests
 ```bash
@@ -58,15 +58,14 @@ python -m pytest
 # Homework 3
 
 ## Task
-- Создать Python проект и определить несколько микросервисов
-- Для каждого микросервиса определите API, используя gRPC или HTTP, для взаимодействия между сервисами.
-- Покрыть функционал тестами
-
+- Create a Python project and define several microservices
+- For each microservice, define an API using gRPC or HTTP for interservice communication
+- Cover the functionality with tests
 
 ## Description
-Проект представляет собой приложение из двух микросервисов.
-- Inventory - создание/редактирование/просмотр товара
-- Payment - создание заказа по id и quantity (количеству) товара
+The project is an application consisting of two microservices:
+- **Inventory** – creation/editing/viewing of products
+- **Payment** – creation of an order by product ID and quantity
 
 ## Run
 ```bash
@@ -81,13 +80,13 @@ uvicorn server.payment.main:app --reload --port=8001
 ```bash
 python -m pytest
 ```
-Тесты создают товар и заказ, и получают об этом информацию.
+The tests create a product and an order, then retrieve information about them.
 
 
 # Homework 4
 
 ## Task
-- Реализовать простую логику с использованием celery и rabbitmq
+- Implement simple logic using Celery and RabbitMQ
 
 ## Run
 ```bash
@@ -95,4 +94,4 @@ docker-compose up
 ```
 
 ## Description
-- Отправить несколько запросов. Результаты отобразятся в консоли.
+- Send several requests. The results will be displayed in the console.
